@@ -38,8 +38,9 @@ public class EditProductMethodTest {
                 .defaultProduct()
                 .build();
 
-        assertThrows(ApiException.class, () -> editProductMethod.process(new ProductDTO(product), null),
-                "Id is mandatory to update product info");
+        Exception exception = assertThrows(ApiException.class,
+                () -> editProductMethod.process(new ProductDTO(product), null));
+        assertEquals("Id is mandatory to update product info", exception.getMessage());
     }
 
     @Test
@@ -48,8 +49,9 @@ public class EditProductMethodTest {
                 .defaultProduct()
                 .build();
 
-        assertThrows(ApiException.class, () -> editProductMethod.process(new ProductDTO(product), ID),
-                "Product not found");
+        Exception exception = assertThrows(ApiException.class,
+                () -> editProductMethod.process(new ProductDTO(product), ID));
+        assertEquals("Product not found", exception.getMessage());
     }
 
     @Test
@@ -70,8 +72,9 @@ public class EditProductMethodTest {
         when(productRepository.findByName(product.getName()))
                 .thenReturn(sameNamedProduct);
 
-        assertThrows(ApiException.class, () -> editProductMethod.process(new ProductDTO(product), ID),
-                "Product with the same name is already exist");
+        Exception exception = assertThrows(ApiException.class,
+                () -> editProductMethod.process(new ProductDTO(product), ID));
+        assertEquals("Product with the same name is already exist", exception.getMessage());
     }
 
     @Test

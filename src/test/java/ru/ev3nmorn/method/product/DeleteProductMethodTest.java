@@ -32,7 +32,9 @@ public class DeleteProductMethodTest {
         when(productRepository.existsById(ID))
                 .thenReturn(false);
 
-        assertThrows(ApiException.class, () -> deleteProductMethod.process(ID), "Product not found");
+        Exception exception = assertThrows(ApiException.class,
+                () -> deleteProductMethod.process(ID));
+        assertEquals("Product not found", exception.getMessage());
     }
 
     @Test

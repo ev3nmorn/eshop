@@ -43,8 +43,9 @@ public class AddProductMethodTest {
         when(productRepository.findByName(EXIST_NAME))
                 .thenReturn(product);
 
-        assertThrows(ApiException.class, () -> addProductMethod.process(new ProductDTO(product)),
-                "Product with the same name is already exist");
+        Exception exception = assertThrows(ApiException.class,
+                () -> addProductMethod.process(new ProductDTO(product)));
+        assertEquals("Product with the same name is already exist", exception.getMessage());
     }
 
     @Test

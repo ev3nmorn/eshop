@@ -38,8 +38,9 @@ public class GetProductByIdMethodTest {
 
     @Test
     public void productNotFoundTest() {
-        assertThrows(ApiException.class, () -> getProductByIdMethod.processToResponse(ID),
-                "Product not found");
+        Exception exception = assertThrows(ApiException.class,
+                () -> getProductByIdMethod.processToResponse(ID));
+        assertEquals("Product not found", exception.getMessage());
     }
 
     @Test
